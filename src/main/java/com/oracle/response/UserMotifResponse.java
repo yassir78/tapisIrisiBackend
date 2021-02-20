@@ -3,9 +3,6 @@ package com.oracle.response;
 import com.oracle.models.Motif;
 import com.oracle.models.User;
 
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-
 public class UserMotifResponse {
     private long id;
     private String name;

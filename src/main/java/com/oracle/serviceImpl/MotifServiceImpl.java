@@ -2,11 +2,6 @@ package com.oracle.serviceImpl;
 
 import java.util.List;
 
-
-import com.oracle.models.Propriete;
-import com.oracle.models.User;
-
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
