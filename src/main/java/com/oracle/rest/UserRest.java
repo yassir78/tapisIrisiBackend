@@ -35,4 +35,5 @@ public class UserRest {
 		return userService.findAll();
 	}
 
+
 }

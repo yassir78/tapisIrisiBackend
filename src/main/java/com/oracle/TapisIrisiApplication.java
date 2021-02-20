@@ -1,5 +1,7 @@
 package com.oracle;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.ejb.HibernateEntityManagerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,8 +12,13 @@ import com.oracle.dao.ProprieteDao;
 import com.oracle.dao.UserDao;
 import com.oracle.models.Role;
 import com.oracle.models.User;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+
+@EnableJpaRepositories
 @SpringBootApplication
+@EnableTransactionManagement
 public class TapisIrisiApplication {
 
 	public static void main(String[] args) {
@@ -30,4 +37,5 @@ public class TapisIrisiApplication {
 		   
 	   };
    }
+
 }

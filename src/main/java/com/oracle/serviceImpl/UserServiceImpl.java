@@ -1,6 +1,7 @@
 package com.oracle.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
 		return userDao.findAll();
 	}
 
 	@Override
+	public User findById(long id) {
+		return userDao.findById(id);
+	}
+
+	@Override
 	public User register(User user) {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
 		User foundUser = userDao.findByLogin(user.getLogin());
 		if(foundUser != null) {
@@ -40,6 +46,9 @@ public class UserServiceImpl implements UserService {
 		}else {
 			return user;
 		}
+=======
+		return userDao.save(user);
+>>>>>>> f088134903207cd2006d96642cfbc3c103daf98b
 	}
 
 }
