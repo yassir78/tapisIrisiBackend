@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserMotifServiceIml implements UserMotifService {
@@ -36,6 +37,11 @@ public class UserMotifServiceIml implements UserMotifService {
     @Override
     public List<UserMotif> findByMotif(Motif motif) {
         return userMotifDao.findByMotif(motif);
+    }
+
+    @Override
+    public Optional<UserMotif> findById(long id) {
+        return userMotifDao.findById(id);
     }
 
     @Override

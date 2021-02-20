@@ -10,7 +10,6 @@ public class UserMotifResponse {
     private long id;
     private String name;
     private String type;
-    private byte[] image;
     private Motif motif;
     private String fileDownloadUri;
 
@@ -25,21 +24,19 @@ public class UserMotifResponse {
     private User user;
 //    UserMotifResponse(userMotif.getName(), fileDownloadUri, userMotif.getType(), userMotif.getImage().length);
 
-    public UserMotifResponse(String name,String fileDownloadUri,String type, byte[] image) {
+    public UserMotifResponse(String name,String fileDownloadUri,String type) {
         this.name = name;
         this.type = type;
-        this.image = image;
         this.fileDownloadUri = fileDownloadUri;
     }
 
     public UserMotifResponse() {
     }
 
-    public UserMotifResponse(long id, String name, String type, byte[] image, Motif motif, User user) {
+    public UserMotifResponse(long id, String name, String type, Motif motif, User user) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.image = image;
         this.motif = motif;
         this.user = user;
     }
@@ -68,13 +65,7 @@ public class UserMotifResponse {
         this.type = type;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 
     public Motif getMotif() {
         return motif;

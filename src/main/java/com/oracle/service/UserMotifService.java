@@ -9,11 +9,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserMotifService {
     public List<UserMotif> findByUser(User user);
 
     public List<UserMotif> findByMotif(Motif motif);
+
+    public Optional<UserMotif> findById(long id);
 
     public UserMotif save(UserMotif userMotif);
 

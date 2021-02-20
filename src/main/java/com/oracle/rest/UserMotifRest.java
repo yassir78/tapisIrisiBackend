@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -51,6 +52,7 @@ public class UserMotifRest {
 
     // done
     @PostMapping(value = "/{user}/{motif}")
+    @ResponseBody
     public ResponseEntity<UserMotifResponse> save(@PathVariable long user, @PathVariable long motif, @RequestParam("file") MultipartFile file) throws IOException {
         User u = userService.findById(user);
         Motif m = motifService.findById(motif);
@@ -62,13 +64,26 @@ public class UserMotifRest {
             userMotifService.save(userMotif);
             String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/files/")
+                    .path("/tapis-irisi/user-motif/images/")
                     .path("" + userMotif.getId())
                     .toUriString();
-            UserMotifResponse userMotifResponse = new UserMotifResponse(userMotif.getName(), fileDownloadUri, userMotif.getType(), userMotif.getImage());
+            UserMotifResponse userMotifResponse = new UserMotifResponse(userMotif.getName(), fileDownloadUri, userMotif.getType());
             return ResponseEntity.status(HttpStatus.OK).body(userMotifResponse);
         } else {
             System.out.println("xi moxkil");
+            return null;
+        }
+
+    }
+
+    @GetMapping("/images/{id}")
+    public ResponseEntity<byte[]> findUserMotifById(@PathVariable long id) {
+        Optional<UserMotif> um = userMotifService.findById(id);
+        if (um != null) {
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + um.get().getName() + "\"")
+                    .body(um.get().getImage());
+        } else {
             return null;
         }
 
