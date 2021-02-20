@@ -9,4 +9,6 @@ public interface UserService {
 	public List<User> findAll();
 
 	public User register(User user);
+	
+	public User login(String login,String password);
 }

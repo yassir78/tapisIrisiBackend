@@ -9,5 +9,6 @@ import com.oracle.models.User;
 @Repository
 @CrossOrigin
 public interface UserDao extends JpaRepository<User, Long> {
-
+   public User findByLogin(String login);
+   public User findByLoginAndPassword(String email,String password);
 }

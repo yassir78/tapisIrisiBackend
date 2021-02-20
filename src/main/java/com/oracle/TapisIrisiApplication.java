@@ -24,6 +24,7 @@ public class TapisIrisiApplication {
 		   user1.setLogin("madara123");
 		   user1.setNom("madara");
 		   user1.setPrenom("prenom");
+		   user1.setPassword("12345");
 		   user1.setRole(Role.USER);
 		   userDao.save(user1);
 		   

@@ -22,7 +22,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User register(User user) {
 		// TODO Auto-generated method stub
-		return userDao.save(user);
+		User foundUser = userDao.findByLogin(user.getLogin());
+		if(foundUser != null) {
+			return new User();
+		}else {
+			return userDao.save(user);
+		}
+		
+	}
+
+	@Override
+	public User login(String login, String password) {
+		// TODO Auto-generated method stub
+		User user = userDao.findByLoginAndPassword(login, password);
+		if(user == null) {
+			return new User();
+		}else {
+			return user;
+		}
 	}
 
 }
