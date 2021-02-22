@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import com.oracle.models.Motif;
 import com.oracle.service.MotifService;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.springframework.web.multipart.MultipartFile;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/tapis-irisi/motif")
@@ -44,4 +49,12 @@ public class MotifRest {
     public void delteMotif(@PathVariable long id) {
         motifService.delete(id);
     }
+
+    // done
+    @PostMapping(value = "/findByImage")
+    public List<Motif> findByImage(@RequestParam("file") MultipartFile file) throws IOException {
+        return motifService.findByImage(file.getBytes());
+    }
+
+
 }

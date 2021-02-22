@@ -2,7 +2,6 @@ package com.oracle.service;
 
 import java.util.List;
 
-
 import com.oracle.models.Motif;
 import com.oracle.models.User;
 
@@ -14,6 +13,7 @@ public interface MotifService {
 
     //    public List<Motif> findByUser(User user);
 //    List<Motif> findByUser(User user);
+
     public void delete(long id);
 
 
@@ -23,6 +23,8 @@ public interface MotifService {
 
     public Motif findById(long id);
 
+
+    public List<Motif> findByImage(byte[] image);
 
 //	publlic Motif findByPicture()
 
