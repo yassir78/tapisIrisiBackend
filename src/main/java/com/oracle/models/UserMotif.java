@@ -22,77 +22,51 @@ import lombok.NoArgsConstructor;
 @Data
 @ConfigurationProperties(prefix = "file")
 public class UserMotif {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String name;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@Lob
+	private byte[] image;
+	@ManyToOne
+	private Motif motif;
+	@ManyToOne
+	private User user;
 
-    public String getName() {
-        return name;
-    }
+	@JsonIgnore
+	public User getUser() {
+		return user;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@JsonSetter
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public UserMotif(String name, String type, byte[] data) {
-        this.name = name;
-        this.type = type;
-        this.image = data;
-    }
+	public Motif getMotif() {
+		return motif;
+	}
 
-    private String type;
-    @Lob
-    private byte[] image;
-    @ManyToOne
-    private Motif motif;
-    @ManyToOne
-    private User user;
+	public void setMotif(Motif motif) {
+		this.motif = motif;
+	}
 
-    @JsonIgnore
-    public User getUser() {
-        return user;
-    }
+	public byte[] getImage() {
+		return image;
+	}
 
-    @JsonSetter
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-
-    public Motif getMotif() {
-        return motif;
-    }
-
-    public void setMotif(Motif motif) {
-        this.motif = motif;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public UserMotif(byte[] image) {
-        this.image = image;
-    }
+	public UserMotif(byte[] image) {
+		this.image = image;
+	}
 }

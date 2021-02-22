@@ -19,6 +19,7 @@ public class Motif {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String libelle;
+    private String description;
     @Transient
     private double pourcentage;
     @OneToMany(mappedBy = "motif")
@@ -41,7 +42,15 @@ public class Motif {
         return id;
     }
 
-    public void setId(Long id) {
+    public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setId(Long id) {
         this.id = id;
     }
 
