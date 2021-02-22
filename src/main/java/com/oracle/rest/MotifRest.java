@@ -3,6 +3,7 @@ package com.oracle.rest;
 import java.util.List;
 
 
+import com.oracle.models.UserMotif;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +33,15 @@ public class MotifRest {
     @PostMapping(value = "")
     public Motif saveMotif(@RequestBody Motif motif) {
         return motifService.save(motif);
+    }
+
+    @PutMapping("/update/{id}")
+    public Motif updateMotif(@RequestBody Motif motif, @PathVariable long id) {
+        return motifService.updateMotif(motif, id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delteMotif(@PathVariable long id) {
+        motifService.delete(id);
     }
 }

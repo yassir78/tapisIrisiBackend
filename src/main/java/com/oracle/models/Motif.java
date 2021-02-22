@@ -4,12 +4,7 @@ package com.oracle.models;
 import java.sql.Blob;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,10 +22,10 @@ public class Motif {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String libelle;
-    @OneToMany(mappedBy = "motif")
+    @OneToMany(mappedBy = "motif", cascade = CascadeType.REMOVE)
     private List<Propriete> proprietes;
 
-    @OneToMany(mappedBy = "motif")
+    @OneToMany(mappedBy = "motif", cascade = CascadeType.REMOVE)
     private List<UserMotif> usermotifs;
 
     @JsonIgnore
@@ -40,6 +35,7 @@ public class Motif {
 
     @JsonSetter
     public void setUsermotifs(List<UserMotif> usermotifs) {
+
         this.usermotifs = usermotifs;
     }
 

@@ -32,12 +32,6 @@ public class ProprieteRest {
     public List<Propriete> findByMotif(@RequestBody Motif motif) {
         return proprieteService.findByMotif(motif);
     }
-
-    //    @GetMapping("/byMotif/{motif}")
-//    public List<Propriete> findByMotif(@PathVariable long motif) {
-//        Motif m = motifService.findById(motif);
-//        return proprieteService.findByMotif(m);
-//    }
     // done
     @PostMapping("/{idmotif}")
     public Propriete save(@RequestBody Propriete propriete, @PathVariable long idmotif) {
@@ -49,6 +43,11 @@ public class ProprieteRest {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         proprieteService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public Propriete update(@RequestBody Propriete propriete, @PathVariable long id) {
+        return proprieteService.updatepropriete(id, propriete);
     }
 
 }

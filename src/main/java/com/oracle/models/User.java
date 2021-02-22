@@ -22,82 +22,83 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String nom;
-	private String prenom;
-	private String login;
-	private String password;
-	@Enumerated(EnumType.STRING)
-	private Role role;
-	private Blob profile_image;
-	@OneToMany(mappedBy = "user")
-	@JsonIgnore
-	private List<UserMotif> usermotifs;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String nom;
+    private String prenom;
+    private String login;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    private Blob profile_image;
+    @OneToMany(mappedBy = "user")
+    private List<UserMotif> usermotifs;
 
-	public List<UserMotif> getUsermotifs() {
-		return usermotifs;
-	}
-   @JsonSetter
-	public void setUsermotifs(List<UserMotif> usermotifs) {
-		this.usermotifs = usermotifs;
-	}
+    @JsonIgnore
+    public List<UserMotif> getUsermotifs() {
+        return usermotifs;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    @JsonSetter
+    public void setUsermotifs(List<UserMotif> usermotifs) {
+        this.usermotifs = usermotifs;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getNom() {
-		return nom;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    public String getNom() {
+        return nom;
+    }
 
-	public String getPrenom() {
-		return prenom;
-	}
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
+    public String getPrenom() {
+        return prenom;
+    }
 
-	public String getLogin() {
-		return login;
-	}
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public String getLogin() {
+        return login;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public Blob getProfile_image() {
-		return profile_image;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	public void setProfile_image(Blob profile_image) {
-		this.profile_image = profile_image;
-	}
+    public Blob getProfile_image() {
+        return profile_image;
+    }
+
+    public void setProfile_image(Blob profile_image) {
+        this.profile_image = profile_image;
+    }
 
 }

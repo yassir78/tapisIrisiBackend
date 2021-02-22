@@ -12,14 +12,16 @@ public interface MotifService {
 
     public List<Motif> findAll();
 
-//    public List<Motif> findByUser(User user);
+    //    public List<Motif> findByUser(User user);
 //    List<Motif> findByUser(User user);
+    public void delete(long id);
 
 
     public Motif save(Motif motif);
 
-    public Motif findById(long id);
+    public Motif updateMotif(Motif motif, long id);
 
+    public Motif findById(long id);
 
 
 //	publlic Motif findByPicture()

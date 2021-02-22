@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Data
@@ -21,6 +23,7 @@ public class Propriete {
     private String libelle;
     private String description;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Motif motif;
 
     public Long getId() {
