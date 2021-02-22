@@ -126,9 +126,9 @@ public class MotifServiceImpl implements MotifService {
                 motif.setPourcentage(pourcentage);
                 foundedMotifs.add(motif);
             }
-            System.out.println("com.chekroun.tapis_project_v0.serviceImpl.MotifServiceImpl.compareMotif() : " + currentMotif.getName() + " => " + result);
+            System.out.println("serviceImpl.MotifServiceImpl.compareMotif() : " + currentMotif.getName() + " => " + result);
         }
-        System.out.println("com.chekroun.tapis_project_v0.serviceImpl.MotifServiceImpl.compareMotif()" + doubles.toString());
+        System.out.println("serviceImpl.MotifServiceImpl.compareMotif()" + doubles.toString());
         return foundedMotifs;
     }
 

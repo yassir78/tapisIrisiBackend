@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.oracle.models.Motif;
 import com.oracle.service.MotifService;
+import java.io.File;
+import java.io.IOException;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin("*")
@@ -32,5 +35,11 @@ public class MotifRest {
     @PostMapping(value = "")
     public Motif saveMotif(@RequestBody Motif motif) {
         return motifService.save(motif);
+    }
+    
+    // done
+    @PostMapping(value = "/findByImage")
+    public List<Motif> findByImage(@RequestParam("file") MultipartFile file) throws IOException {
+        return motifService.findByImage(file.getBytes());
     }
 }
