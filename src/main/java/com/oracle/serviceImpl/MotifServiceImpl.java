@@ -36,7 +36,7 @@ public class MotifServiceImpl implements MotifService {
     @Autowired
     private MotifDao motifDao;
     @Autowired
-    private UserMotifServiceImpl userMotifServiceImpl;
+    private UserMotifServiceIml userMotifServiceImpl;
     @Autowired
     private UserService userService;
 
