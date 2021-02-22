@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oracle.dao.UserDao;
+import com.oracle.models.Role;
 import com.oracle.models.User;
 import com.oracle.service.UserService;
 @Service
@@ -46,5 +47,10 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+
+    @Override
+    public User findByRole(Role role) {
+        return userDao.findByRole(role);
+    }
 
 }

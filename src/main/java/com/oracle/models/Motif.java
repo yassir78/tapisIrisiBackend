@@ -11,20 +11,16 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.Transient;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 public class Motif {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String libelle;
+    @Transient
+    private double pourcentage;
     @OneToMany(mappedBy = "motif")
     private List<Propriete> proprietes;
 
@@ -66,4 +62,14 @@ public class Motif {
     public void setProprietes(List<Propriete> proprietes) {
         this.proprietes = proprietes;
     }
+
+    public double getPourcentage() {
+        return pourcentage;
+    }
+
+    public void setPourcentage(double pourcentage) {
+        this.pourcentage = pourcentage;
+    }
+    
+    
 }
