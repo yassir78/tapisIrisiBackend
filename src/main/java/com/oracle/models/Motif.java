@@ -61,8 +61,7 @@ public class Motif {
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
-
-    @JsonIgnore
+    
     public List<Propriete> getProprietes() {
         return proprietes;
     }

@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ public class Propriete {
     private String libelle;
     private String description;
     @ManyToOne
+    @JsonIgnore
     private Motif motif;
 
     public Long getId() {
@@ -46,7 +49,7 @@ public class Propriete {
     public void setDescription(String description) {
         this.description = description;
     }
-
+ 
     public Motif getMotif() {
         return motif;
     }
