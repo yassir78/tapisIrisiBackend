@@ -1,20 +1,5 @@
 package com.oracle.serviceImpl;
 
-<<<<<<< HEAD
-import com.oracle.dao.UserMotifDao;
-import com.oracle.models.Motif;
-import com.oracle.models.User;
-import com.oracle.models.UserMotif;
-import com.oracle.service.UserMotifService;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-=======
->>>>>>> b11115a0f968b289bb7ebbcfed4c004a51082afd
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -22,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

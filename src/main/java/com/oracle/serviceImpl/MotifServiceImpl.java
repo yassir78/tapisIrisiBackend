@@ -5,18 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-import java.util.Optional;
-
-
-import com.oracle.models.Propriete;
-import com.oracle.models.User;
-
-import com.oracle.models.UserMotif;
-import com.oracle.service.ProprieteService;
-import com.oracle.service.UserMotifService;
-import org.modelmapper.ModelMapper;
-=======
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,10 +19,13 @@ import org.springframework.stereotype.Service;
 
 import com.oracle.dao.MotifDao;
 import com.oracle.models.Motif;
+import com.oracle.models.Propriete;
 import com.oracle.models.Role;
 import com.oracle.models.User;
 import com.oracle.models.UserMotif;
 import com.oracle.service.MotifService;
+import com.oracle.service.ProprieteService;
+import com.oracle.service.UserMotifService;
 import com.oracle.service.UserService;
 
 import nu.pattern.OpenCV;

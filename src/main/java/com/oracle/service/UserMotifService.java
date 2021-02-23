@@ -29,9 +29,10 @@ public interface UserMotifService {
     public int deleteUserMotifs(List<UserMotif> userMotifs);
 
 
+
 //    public Blob createBlob(InputStream content, long size);
 //
-//    public UserMotif saveImage(MultipartFile file);
+    public UserMotif saveImage(MultipartFile file);
 
 //    public void storeImage(MultipartFile file) throws IOException;
 }
