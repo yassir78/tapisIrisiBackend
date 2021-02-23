@@ -16,4 +16,6 @@ public interface UserService {
     public User login(String login, String password);
 
     public User findByRole(Role role);
+    
+    public User update(User user);
 }

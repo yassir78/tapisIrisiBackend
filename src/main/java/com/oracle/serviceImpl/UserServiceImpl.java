@@ -53,4 +53,15 @@ public class UserServiceImpl implements UserService {
         return userDao.findByRole(role);
     }
 
+	@Override
+	public User update(User user) {
+		// TODO Auto-generated method stub
+		User searchUser = userDao.findByLogin(user.getLogin());
+		searchUser.setNom(user.getNom());
+		searchUser.setPrenom(user.getPrenom());
+		searchUser.setPassword(user.getPassword());
+		User updatedUser = userDao.save(searchUser);
+		return updatedUser;
+	}
+
 }
