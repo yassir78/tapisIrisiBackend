@@ -16,13 +16,22 @@ public interface UserMotifService {
 
     public List<UserMotif> findByMotif(Motif motif);
 
+    public List<UserMotif> findAll();
+
+
     public Optional<UserMotif> findById(long id);
 
     public UserMotif save(UserMotif userMotif);
 
-    public Blob createBlob(InputStream content, long size);
+    public UserMotif updateUserMotif(UserMotif userMotif, long id);
 
-    public UserMotif saveImage(MultipartFile file);
+    public void delete(long id);
+    public int deleteUserMotifs(List<UserMotif> userMotifs);
 
-    public void storeImage(MultipartFile file) throws IOException;
+
+//    public Blob createBlob(InputStream content, long size);
+//
+//    public UserMotif saveImage(MultipartFile file);
+
+//    public void storeImage(MultipartFile file) throws IOException;
 }

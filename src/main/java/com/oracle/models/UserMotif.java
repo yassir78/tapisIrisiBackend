@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import com.oracle.models.Motif;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -32,6 +33,14 @@ public class UserMotif {
 	@ManyToOne
 	private User user;
 
+	public Motif getMotif() {
+		return motif;
+	}
+
+	public void setMotif(Motif motif) {
+		this.motif = motif;
+	}
+
 	@JsonIgnore
 	public User getUser() {
 		return user;
@@ -50,13 +59,7 @@ public class UserMotif {
 		this.id = id;
 	}
 
-	public Motif getMotif() {
-		return motif;
-	}
 
-	public void setMotif(Motif motif) {
-		this.motif = motif;
-	}
 
 	public byte[] getImage() {
 		return image;

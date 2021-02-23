@@ -1,27 +1,16 @@
 package com.oracle;
 
-import java.io.File;
-
-import java.io.FileInputStream;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.dao.MotifDao;
 import com.oracle.dao.ProprieteDao;
 import com.oracle.dao.UserDao;
 import com.oracle.dao.UserMotifDao;
-import com.oracle.models.Motif;
-import com.oracle.models.Propriete;
-import com.oracle.models.Role;
-import com.oracle.models.User;
-import com.oracle.models.UserMotif;
 
 @EnableJpaRepositories
 @SpringBootApplication

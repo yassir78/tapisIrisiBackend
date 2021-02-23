@@ -3,11 +3,15 @@ package com.oracle.models;
 
 import java.util.List;
 
+
+import javax.persistence.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -19,13 +23,14 @@ public class Motif {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String libelle;
+
     private String description;
     @Transient
     private double pourcentage;
-    @OneToMany(mappedBy = "motif")
+    @OneToMany(mappedBy = "motif", cascade = CascadeType.REMOVE)
     private List<Propriete> proprietes;
 
-    @OneToMany(mappedBy = "motif")
+    @OneToMany(mappedBy = "motif", cascade = CascadeType.REMOVE)
     private List<UserMotif> usermotifs;
 
     @JsonIgnore
@@ -35,6 +40,7 @@ public class Motif {
 
     @JsonSetter
     public void setUsermotifs(List<UserMotif> usermotifs) {
+
         this.usermotifs = usermotifs;
     }
 

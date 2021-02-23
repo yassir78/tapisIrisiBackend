@@ -8,6 +8,7 @@ public class UserMotifResponse {
     private Motif motif;
     private String fileDownloadUri;
 
+
     public String getFileDownloadUri() {
         return fileDownloadUri;
     }

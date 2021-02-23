@@ -3,13 +3,16 @@ package com.oracle.rest;
 import java.util.List;
 
 
+import com.oracle.models.UserMotif;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.oracle.models.Motif;
 import com.oracle.service.MotifService;
+
 import java.io.File;
 import java.io.IOException;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -36,10 +39,22 @@ public class MotifRest {
     public Motif saveMotif(@RequestBody Motif motif) {
         return motifService.save(motif);
     }
-    
+
+    @PutMapping("/update/{id}")
+    public Motif updateMotif(@RequestBody Motif motif, @PathVariable long id) {
+        return motifService.updateMotif(motif, id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delteMotif(@PathVariable long id) {
+        motifService.delete(id);
+    }
+
     // done
     @PostMapping(value = "/findByImage")
     public List<Motif> findByImage(@RequestParam("file") MultipartFile file) throws IOException {
         return motifService.findByImage(file.getBytes());
     }
+
+
 }
