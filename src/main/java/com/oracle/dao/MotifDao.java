@@ -11,4 +11,5 @@ import com.oracle.models.Motif;
 public interface MotifDao extends JpaRepository<Motif, Long> {
     //    List<Motif> findByUser(User user);
     public Motif findById(long id);
+    public Motif findByLibelle(String libelle);
 }
