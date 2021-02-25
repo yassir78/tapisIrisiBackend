@@ -35,7 +35,7 @@ public class TapisIrisiApplication {
 	public CommandLineRunner demo(UserDao userDao, MotifDao motifDao, ProprieteDao proprieteDao,
 			UserMotifDao userMotifDao) {
 		return (args) -> {
-			// user
+//			// user
 //			User user = new User();
 //			user.setLogin("admin");
 //			user.setNom("yassir");
