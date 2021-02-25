@@ -71,7 +71,7 @@ public class MotifRest {
                 .path("" + (int)(10.0 * Math.random()))
                 .toUriString();
 
-        um.setFileUrl(fiOleDownloadUri);
+        um.setFileUrl(fileDownloadUri);
         return ResponseEntity.status(HttpStatus.OK).body(um);
     }
 
