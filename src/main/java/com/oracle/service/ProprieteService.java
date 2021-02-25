@@ -13,7 +13,9 @@ public interface ProprieteService {
     public Propriete save(Propriete propriete);
 
     public Optional<Propriete> findById(long id);
-
+    
+    public void updatePropriete(Motif motif);
+    
     List<Propriete> findByMotif(Motif motif);
 
     public void delete(long id);

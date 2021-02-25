@@ -33,7 +33,17 @@ public class Motif {
     @OneToMany(mappedBy = "motif", cascade = CascadeType.REMOVE)
     private List<UserMotif> usermotifs;
 
-    @JsonIgnore
+    public Motif(String libelle2, String desc) {
+		// TODO Auto-generated constructor stub
+    	this.libelle = libelle2;
+    	this.description = desc;
+	}
+
+	public Motif() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@JsonIgnore
     public List<UserMotif> getUsermotifs() {
         return usermotifs;
     }

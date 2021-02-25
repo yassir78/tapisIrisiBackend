@@ -16,7 +16,14 @@ import com.oracle.service.ProprieteService;
 public class ProprieteRest {
     @Autowired
     private ProprieteService proprieteService;
-    @Autowired
+    @PutMapping("/update")
+    public void updatePropriete(@RequestBody Motif motif) {
+    	System.out.println("update propriete");
+    	System.out.println(motif.getProprietes().get(0).getId());
+		proprieteService.updatePropriete(motif);
+	}
+
+	@Autowired
     private MotifService motifService;
 
 
@@ -40,7 +47,7 @@ public class ProprieteRest {
         return proprieteService.save(propriete);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable long id) {
         proprieteService.delete(id);
     }

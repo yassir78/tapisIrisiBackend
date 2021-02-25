@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
 import com.oracle.dao.ProprieteDao;
 import com.oracle.models.Propriete;
 import com.oracle.service.ProprieteService;
@@ -60,4 +61,17 @@ public class ProprieteServiceImpl implements ProprieteService {
             return null;
         }
     }
+
+	@Override
+	public void updatePropriete(Motif motif) {
+		// TODO Auto-generated method stub
+		if(!motif.getProprietes().isEmpty()) {
+			for(Propriete propriete : motif.getProprietes()) {
+				Propriete pro = proprieteDao.getOne(propriete.getId());
+				pro.setLibelle(propriete.getLibelle());
+				pro.setDescription(propriete.getDescription());
+				proprieteDao.save(pro);
+			}
+		}
+	}
 }

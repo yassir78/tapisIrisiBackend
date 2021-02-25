@@ -49,6 +49,8 @@ public class MotifServiceImpl implements MotifService {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private UserMotifService userMotifService;
+	@Autowired
 	private UserMotifDao userMotifDao;
 	@Autowired
 	private ProprieteDao proprieteDao;
@@ -59,7 +61,7 @@ public class MotifServiceImpl implements MotifService {
 	}
 
 	@Override
-	public int delete(long  id) {
+	public int delete(long id) {
 		Motif motif = motifDao.getOne(id);
 		motifDao.delete(motif);
 		return 1;
@@ -76,22 +78,18 @@ public class MotifServiceImpl implements MotifService {
 	}
 
 	@Override
-	public UserMotif updateMotif(Motif motif, MultipartFile file, Long id) {
+	public UserMotif updateMotif(long id, String libelle, MultipartFile file, Long idUserMorif) {
 
 		// motifDao.save(motif);
-		Motif foundedMotif = motifDao.getOne(motif.getId());
-		for (Propriete propriete : motif.getProprietes()) {
-			Propriete prop = proprieteDao.getOne(propriete.getId());
-			prop.setDescription(propriete.getDescription());
-			prop.setLibelle(propriete.getLibelle());
-			proprieteDao.save(prop);
-		}
-		foundedMotif.setDescription(motif.getDescription());
-		foundedMotif.setLibelle(motif.getLibelle());
+		Motif foundedMotif = motifDao.getOne(id);
+
+		foundedMotif.setLibelle(libelle);
 		motifDao.save(foundedMotif);
-		Optional<UserMotif> foundedUserMotif = userMotifDao.findById(id);
+		Optional<UserMotif> foundedUserMotif = userMotifDao.findById(idUserMorif);
+		System.out.println("///////////////////////////");
 		if (foundedUserMotif != null) {
 			try {
+				System.out.println("file not null");
 				if (file != null) {
 					foundedUserMotif.get().setImage(file.getBytes());
 				}
@@ -104,7 +102,7 @@ public class MotifServiceImpl implements MotifService {
 			return foundedUserMotif.get();
 		}
 
-		return null;
+		return foundedUserMotif.get();
 	}
 
 	@Override
@@ -113,89 +111,16 @@ public class MotifServiceImpl implements MotifService {
 	}
 
 	@Override
-	public List<Motif> findByImage(byte[] image) {
-		// load the opencv lbrary
-		OpenCV.loadShared();
-		boolean fosIsNull = false;
+	public Motif save(Motif motif, MultipartFile file, long id) throws IOException {
+		Motif ms = motifDao.save(motif);
+		UserMotif us = new UserMotif();
+		User u = userService.findById(id);
+		us.setMotif(ms);
+		us.setUser(u);
+		us.setImage(file.getBytes());
+		userMotifService.save(us);
+		return ms;
 
-		User user = userService.findByRole(Role.ADMIN);
-		List<UserMotif> motifs = userMotifServiceImpl.findByUser(user);
-		List<Motif> foundedMotifs = new ArrayList<>();
-		String loadedImagefile = "loadedImagefilePathname51";
-		String imageFile = "imageFilePathname55";
-		List<Double> doubles = new ArrayList<>();
-
-		for (UserMotif currentMotif : motifs) {
-
-			try {
-				FileOutputStream fos = new FileOutputStream(loadedImagefile);
-				if (fos != null) {
-					fos.write(currentMotif.getImage());
-					fos.close();
-				} else {
-					fosIsNull = true;
-				}
-			} catch (FileNotFoundException ex) {
-				System.out.println("err file output strem" + ex.getMessage());
-			} catch (IOException ex) {
-				System.out.println("err file output strem" + ex.getMessage());
-			}
-
-			try {
-				FileOutputStream fos = new FileOutputStream(imageFile);
-				if (fos != null) {
-					fos.write(image);
-					fos.close();
-				} else {
-					fosIsNull = true;
-				}
-			} catch (FileNotFoundException ex) {
-				Logger.getLogger(MotifServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-			} catch (IOException ex) {
-				Logger.getLogger(MotifServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-			}
-
-			if (!fosIsNull) {
-				MatOfPoint2f approxCurve = new MatOfPoint2f();
-				Mat src = Imgcodecs.imread(loadedImagefile);
-
-				MatOfPoint2f imageapproxCurve = new MatOfPoint2f();
-				Mat imageSrc = Imgcodecs.imread(imageFile);
-
-				// Converting the source image to binary
-				Mat gray = new Mat(src.rows(), src.cols(), src.type());
-				Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
-				Mat binary = new Mat(src.rows(), src.cols(), src.type(), new Scalar(0));
-				Imgproc.threshold(gray, binary, 100, 255, Imgproc.THRESH_BINARY_INV);
-
-				Mat imageGray = new Mat(imageSrc.rows(), imageSrc.cols(), imageSrc.type());
-				Imgproc.cvtColor(imageSrc, imageGray, Imgproc.COLOR_BGR2GRAY);
-				Mat imageBinary = new Mat(imageSrc.rows(), imageSrc.cols(), imageSrc.type(), new Scalar(0));
-				Imgproc.threshold(imageGray, imageBinary, 100, 255, Imgproc.THRESH_BINARY_INV);
-
-				List<MatOfPoint> contours1 = new ArrayList<>();
-				List<MatOfPoint> contours2 = new ArrayList<>();
-				Mat hierarchey = new Mat();
-				Imgproc.findContours(binary, contours1, hierarchey, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-				Imgproc.findContours(imageBinary, contours2, hierarchey, Imgproc.RETR_TREE,
-						Imgproc.CHAIN_APPROX_SIMPLE);
-
-				double result = Imgproc.matchShapes(contours1.get(0), contours2.get(0), 1, 0);
-				doubles.add(result);
-
-				if (result < 0.15) {
-					double pourcentage = 100 - (100 * result);
-					Motif motif = currentMotif.getMotif();
-					motif.setPourcentage(pourcentage);
-					foundedMotifs.add(motif);
-				}
-				System.out.println("serviceImpl.MotifServiceImpl.compareMotif() : "
-						+ currentMotif.getMotif().getLibelle() + " => " + result + " = " + (result < 0.01));
-			}
-		}
-		System.out.println("serviceImpl.MotifServiceImpl.compareMotif()" + foundedMotifs.size());
-		return foundedMotifs;
 	}
-
 
 }

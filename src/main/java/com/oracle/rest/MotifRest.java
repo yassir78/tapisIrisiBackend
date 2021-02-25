@@ -30,7 +30,17 @@ public class MotifRest {
     @Autowired
     private MotifService motifService;
 
-    // done
+    @PostMapping(value = "/save/")
+    public Motif saveMotif2(@RequestParam("libelle") String libelle, @RequestParam("desc") String desc, @RequestParam("file") MultipartFile file, @RequestParam("userId") long userId) {
+        Motif m = new Motif(libelle, desc);
+        try {
+            m = motifService.save(m, file, userId);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return m;
+    }
+	// done
     @GetMapping("/")
     public List<Motif> findAll() {
         return motifService.findAll();
@@ -48,18 +58,20 @@ public class MotifRest {
         return motifService.save(motif);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<UserMotif> updateMotif(@RequestBody Motif motif,MultipartFile file, @PathVariable long id) {
-    	
-        UserMotif um = motifService.updateMotif(motif,file, id);
+    @PostMapping("/update/")
+    public ResponseEntity<UserMotif> updateMotif(@RequestParam String libelle,
+    		@RequestParam(name = "idMotif") long idMotif,MultipartFile file, @RequestParam(name = "idUserMotif") long idUserMotif) {
+    	System.out.println("jkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+        UserMotif um = motifService.updateMotif(idMotif,libelle,file, idUserMotif);
         //String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        
         String fileDownloadUri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/tapis-irisi/user-motif/images/")
-                .path("" + um.getId())
+                .path("" + (int)(10.0 * Math.random()))
                 .toUriString();
 
-        um.setFileUrl(fileDownloadUri);
+        um.setFileUrl(fiOleDownloadUri);
         return ResponseEntity.status(HttpStatus.OK).body(um);
     }
 
@@ -68,11 +80,6 @@ public class MotifRest {
        return  motifService.delete(id);
     }
 
-    // done
-    @PostMapping(value = "/findByImage")
-    public List<Motif> findByImage(@RequestParam("file") MultipartFile file) throws IOException {
-        return motifService.findByImage(file.getBytes());
-    }
 
 
 }

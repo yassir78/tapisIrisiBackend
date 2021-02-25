@@ -33,39 +33,34 @@ import com.oracle.service.MotifService;
 import com.oracle.service.UserMotifService;
 import com.oracle.service.UserService;
 
-
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/tapis-irisi/user-motif")
 public class UserMotifRest {
 
-    @Autowired
-    private UserMotifService userMotifService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private MotifService motifService;
+	@Autowired
+	private UserMotifService userMotifService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private MotifService motifService;
 
-    @GetMapping("/")
-    public ResponseEntity<List<UserMotifResponse>> findAll() {
-        List<UserMotifResponse> userMotifResponses = new ArrayList<>();
-        List<UserMotif> usermotifs = userMotifService.findAll();
-        for (UserMotif um : usermotifs) {
-            UserMotifResponse umr = new UserMotifResponse();
-            String fileDownloadUri = ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/tapis-irisi/user-motif/images/")
-                    .path("" + um.getId())
-                    .toUriString();
-            umr.setFileDownloadUri(fileDownloadUri);
-            BeanUtils.copyProperties(um, umr);
-            userMotifResponses.add(umr);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(userMotifResponses);
-    }
+	@GetMapping("/")
+	public ResponseEntity<List<UserMotifResponse>> findAll() {
+		List<UserMotifResponse> userMotifResponses = new ArrayList<>();
+		List<UserMotif> usermotifs = userMotifService.findAll();
+		for (UserMotif um : usermotifs) {
+			UserMotifResponse umr = new UserMotifResponse();
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+					.path("/tapis-irisi/user-motif/images/").path("" + um.getId()).toUriString();
+			umr.setFileDownloadUri(fileDownloadUri);
+			BeanUtils.copyProperties(um, umr);
+			userMotifResponses.add(umr);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(userMotifResponses);
+	}
 
-    // done
+	// done
 //    @GetMapping("/byUser")
 //    public List<UserMotif> findByUser(@RequestBody User user) {
 //        return userMotifService.findByUser(user);
@@ -78,35 +73,46 @@ public class UserMotifRest {
 //	@Autowired
 //	private MotifService motifService;
 
+	// done
+	@GetMapping("/byUser")
+	public List<UserMotif> findByUser(@RequestBody User user) {
+		return userMotifService.findByUser(user);
+	}
 
-    // done
-    @GetMapping("/byUser")
-    public List<UserMotif> findByUser(@RequestBody User user) {
-        return userMotifService.findByUser(user);
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<List<UserMotif>> findByUser(@PathVariable Long id) {
+		List<UserMotif> userMotifs = userMotifService.findByUser(id);
+		for (UserMotif userMotif : userMotifs) {
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+					.path("/tapis-irisi/user-motif/images/").path("" + userMotif.getId()).toUriString();
 
-    @GetMapping("/images/{id}")
-    public ResponseEntity<byte[]> getImageUserMotif(@PathVariable long id) {
-        Optional<UserMotif> um = userMotifService.findById(id);
-        if (um != null) {
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "\"")
-                    .body(um.get().getImage());
-        } else {
-            return null;
-        }
-    }
+			userMotif.setFileUrl(fileDownloadUri);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(userMotifs);
+	}
 
-    // done
-    @GetMapping("/byMotif")
-    public List<UserMotif> findByMotif(@RequestBody Motif motif) {
-        return userMotifService.findByMotif(motif);
-    }
+//    @GetMapping("/images/{id}")
+//    public ResponseEntity<byte[]> getImageUserMotif(@PathVariable long id) {
+//        Optional<UserMotif> um = userMotifService.findById(id);
+//        if (um != null) {
+//            return ResponseEntity.ok()
+//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "\"")
+//                    .body(um.get().getImage());
+//        } else {
+//            return null;
+//        }
+//    }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
-        userMotifService.delete(id);
-    }
+	// done
+	@GetMapping("/byMotif")
+	public List<UserMotif> findByMotif(@RequestBody Motif motif) {
+		return userMotifService.findByMotif(motif);
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable long id) {
+		userMotifService.delete(id);
+	}
 
 //    @PostMapping("/upload")
 //    public void uploadFile(@RequestParam("file") MultipartFile file) {
@@ -119,68 +125,72 @@ public class UserMotifRest {
 //        }
 //    }
 
-    // done
-    @PutMapping("/{idUserM}")
-    @ResponseBody
-    public ResponseEntity<UserMotifResponse> updateImageUserMotif(@PathVariable long idUserM,
-                                                                  @RequestParam("file") MultipartFile file) throws IOException {
-        UserMotif um = userMotifService.findById(idUserM).get();
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        um.setImage(file.getBytes());
-        UserMotif userms = userMotifService.save(um);
-        String fileDownloadUri = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/tapis-irisi/user-motif/images/")
-                .path("" + um.getId())
-                .toUriString();
+	// done
+	@PutMapping("/{idUserM}")
+	@ResponseBody
+	public ResponseEntity<UserMotifResponse> updateImageUserMotif(@PathVariable long idUserM,
+			@RequestParam("file") MultipartFile file) throws IOException {
+		UserMotif um = userMotifService.findById(idUserM).get();
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		um.setImage(file.getBytes());
+		UserMotif userms = userMotifService.save(um);
+		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+				.path("/tapis-irisi/user-motif/images/").path("" + um.getId()).toUriString();
 
-        UserMotifResponse userMotifResponse = new UserMotifResponse(fileDownloadUri);
-        BeanUtils.copyProperties(userms, userMotifResponse);
-        return ResponseEntity.status(HttpStatus.OK).body(userMotifResponse);
-    }
+		UserMotifResponse userMotifResponse = new UserMotifResponse(fileDownloadUri);
+		BeanUtils.copyProperties(userms, userMotifResponse);
+		return ResponseEntity.status(HttpStatus.OK).body(userMotifResponse);
+	}
 
+	// done
+	@PostMapping(value = "/{user}/{motif}")
+	@ResponseBody
+	public ResponseEntity<UserMotifResponse> save(@PathVariable long user, @PathVariable long motif,
+			@RequestParam("file") MultipartFile file) throws IOException {
+		User u = userService.findById(user);
+		Motif m = motifService.findById(motif);
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		UserMotif userMotif = new UserMotif(file.getBytes());
+		if (u != null && m != null) {
+			userMotif.setUser(u);
+			userMotif.setMotif(m);
+			UserMotif userms = userMotifService.save(userMotif);
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+					.path("/tapis-irisi/user-motif/images/").path("" + userMotif.getId()).toUriString();
 
-    // done
-    @PostMapping(value = "/{user}/{motif}")
-    @ResponseBody
-    public ResponseEntity<UserMotifResponse> save(@PathVariable long user, @PathVariable long motif, @RequestParam("file") MultipartFile file) throws IOException {
-        User u = userService.findById(user);
-        Motif m = motifService.findById(motif);
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        UserMotif userMotif = new UserMotif(file.getBytes());
-        if (u != null && m != null) {
-            userMotif.setUser(u);
-            userMotif.setMotif(m);
-            UserMotif userms = userMotifService.save(userMotif);
+			UserMotifResponse userMotifResponse = new UserMotifResponse(fileDownloadUri);
+			BeanUtils.copyProperties(userms, userMotifResponse);
+			return ResponseEntity.status(HttpStatus.OK).body(userMotifResponse);
+		} else {
+			System.out.println("xi moxkil");
+			return null;
+		}
+	}
+	@PostMapping(value = "/findByImage")
+    public ResponseEntity<List<UserMotif>> findByImage(@RequestParam("file") MultipartFile file) throws IOException {
+        List<UserMotif> userMotifs = userMotifService.findByImage(file.getBytes());
+        for (UserMotif userMotif : userMotifs) {
             String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/tapis-irisi/user-motif/images/")
                     .path("" + userMotif.getId())
                     .toUriString();
 
-            UserMotifResponse userMotifResponse = new UserMotifResponse(fileDownloadUri);
-            BeanUtils.copyProperties(userms, userMotifResponse);
-            return ResponseEntity.status(HttpStatus.OK).body(userMotifResponse);
-        } else {
-            System.out.println("xi moxkil");
-            return null;
+            userMotif.setFileUrl(fileDownloadUri);
         }
+        return ResponseEntity.status(HttpStatus.OK).body(userMotifs);
     }
-}
-
-
 // done
 
-
-//	@GetMapping("/images/{id}")
-//	public ResponseEntity<byte[]> findUserMotifById(@PathVariable long id) {
-//		Optional<UserMotif> um = userMotifService.findById(id);
-//		if (um != null) {
-//			return ResponseEntity.ok()
-//					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + um.get().getName() + "\"")
-//					.body(um.get().getImage());
-//		} else {
-//			return null;
-//		}
-//
-//	}
+	@GetMapping("/images/{id}")
+	public ResponseEntity<byte[]> findUserMotifById(@PathVariable long id) {
+		Optional<UserMotif> um = userMotifService.findById(id);
+		if (um != null) {
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=")
+					.body(um.get().getImage());
+		} else {
+			return null;
+		}
+	}
+	
+}

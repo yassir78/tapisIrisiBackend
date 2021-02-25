@@ -1,11 +1,12 @@
 package com.oracle.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oracle.models.Motif;
 import com.oracle.models.UserMotif;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public interface MotifService {
 
@@ -14,17 +15,18 @@ public interface MotifService {
 	// public List<Motif> findByUser(User user);
 //    List<Motif> findByUser(User user);
 
-
 	public Motif save(Motif motif);
+
+	public Motif save(Motif motif, MultipartFile file, long id) throws IOException;
 
 	public Motif findById(long id);
 
-	public List<Motif> findByImage(byte[] image);
 
-	public UserMotif updateMotif(Motif motif, MultipartFile file, Long id);
 
-//	publlic Motif findByPicture()
+	public int delete(long id);
 
-	public int delete(long  id);
+
+	public UserMotif updateMotif(long id, String libelle, MultipartFile file, Long idUserMorif);
+
 
 }

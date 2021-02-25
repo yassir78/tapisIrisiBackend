@@ -15,6 +15,7 @@ public interface UserMotifService {
     public List<UserMotif> findByUser(User user);
 
     public List<UserMotif> findByMotif(Motif motif);
+    public List<UserMotif> findByUser(Long id);
 
     public List<UserMotif> findAll();
 
@@ -33,6 +34,8 @@ public interface UserMotifService {
 //    public Blob createBlob(InputStream content, long size);
 //
     public UserMotif saveImage(MultipartFile file);
+
+	public List<UserMotif> findByImage(byte[] bytes);
 
 //    public void storeImage(MultipartFile file) throws IOException;
 }
