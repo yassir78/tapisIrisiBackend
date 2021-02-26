@@ -155,7 +155,8 @@ public class UserMotifServiceIml implements UserMotifService {
         List<UserMotif> foundedMotifs = new ArrayList<>();
         String loadedImagefile = "loadedImagefilePathname51";
         String imageFile = "imageFilePathname55";
-        List<Double> doubles = new ArrayList<>();
+        List<Integer> results = new ArrayList<>();
+        List<Integer> contourSizes = new ArrayList<>();
 
         for (UserMotif currentUserMotif : userMotifs) {
 
@@ -164,7 +165,7 @@ public class UserMotifServiceIml implements UserMotifService {
                 if (fos != null) {
                     fos.write(currentUserMotif.getImage());
                     fos.close();
-                }else {
+                } else {
                     fosIsNull = true;
                 }
             } catch (FileNotFoundException ex) {
@@ -178,7 +179,7 @@ public class UserMotifServiceIml implements UserMotifService {
                 if (fos != null) {
                     fos.write(image);
                     fos.close();
-                }else {
+                } else {
                     fosIsNull = true;
                 }
             } catch (FileNotFoundException ex) {
@@ -188,9 +189,7 @@ public class UserMotifServiceIml implements UserMotifService {
             }
 
             if (!fosIsNull) {
-                MatOfPoint2f approxCurve = new MatOfPoint2f();
                 Mat src = Imgcodecs.imread(loadedImagefile);
-                MatOfPoint2f imageapproxCurve = new MatOfPoint2f();
                 Mat imageSrc = Imgcodecs.imread(imageFile);
 
                 //Converting the source image to binary
@@ -211,19 +210,36 @@ public class UserMotifServiceIml implements UserMotifService {
                         Imgproc.CHAIN_APPROX_SIMPLE);
                 Imgproc.findContours(imageBinary, contours2, hierarchey, Imgproc.RETR_TREE,
                         Imgproc.CHAIN_APPROX_SIMPLE);
-                double result = Imgproc.matchShapes(contours1.get(0), contours2.get(0), Imgproc.CV_CONTOURS_MATCH_I1, 0);
-                doubles.add(result);
 
-                if (result < 0.15) {
-                    double pourcentage = 100 - (100 * result);
-                    currentUserMotif.setUser(null);
-                    currentUserMotif.getMotif().setPourcentage(pourcentage);
-                    foundedMotifs.add(currentUserMotif);
+                List<Integer> contourResults = new ArrayList<>();
+                for (MatOfPoint matOfPoint2 : contours2) {
+                    int matches = 0;
+                    Mat image2 = matOfPoint2.t();
+                    for (MatOfPoint matOfPoint1 : contours1) {
+                        Mat image1 = matOfPoint1.t();
+                        double matchValue1 = Imgproc.matchShapes(image1, image2, Imgproc.CV_CONTOURS_MATCH_I1, 0);
+                        double matchValue2 = Imgproc.matchShapes(image1, image2, Imgproc.CV_CONTOURS_MATCH_I2, 0);
+                        double matchValue3 = Imgproc.matchShapes(image1, image2, Imgproc.CV_CONTOURS_MATCH_I3, 0);
+
+                        if (matchValue1 == 0.0 && matchValue2 == 0.0 && matchValue3 == 0.0) {
+                            matches++;
+                        }
+                    }
+                    contourResults.add(matches);
+//                    System.out.println(currentUserMotif.getMotif().getLibelle() + "  matchValue=" + contourResults.size());
                 }
-                System.out.println("serviceImpl.MotifServiceImpl.compareMotif() : " + currentUserMotif.getMotif().getUsermotifs().get(0).getId() + " => " + result + " = " + (result < 0.01));
+                results.add(contourResults.size());
+                double pourcentage = 0;
+                if (contours1.size() >= contourResults.size()) {
+                    pourcentage = ((double) contourResults.size() / contours1.size()) * 100;
+                    if (pourcentage > 50) {
+                        currentUserMotif.getMotif().setPourcentage(pourcentage);
+                        foundedMotifs.add(currentUserMotif);
+                    }
+                    System.out.println(currentUserMotif.getMotif().getLibelle() + "  pourcentage=" + pourcentage);
+                }
             }
         }
-        System.out.println("serviceImpl.MotifServiceImpl.compareMotif()" + foundedMotifs.size());
         return foundedMotifs;
     }
 
