@@ -190,7 +190,6 @@ public class UserMotifServiceIml implements UserMotifService {
             if (!fosIsNull) {
                 MatOfPoint2f approxCurve = new MatOfPoint2f();
                 Mat src = Imgcodecs.imread(loadedImagefile);
-
                 MatOfPoint2f imageapproxCurve = new MatOfPoint2f();
                 Mat imageSrc = Imgcodecs.imread(imageFile);
 
@@ -212,8 +211,7 @@ public class UserMotifServiceIml implements UserMotifService {
                         Imgproc.CHAIN_APPROX_SIMPLE);
                 Imgproc.findContours(imageBinary, contours2, hierarchey, Imgproc.RETR_TREE,
                         Imgproc.CHAIN_APPROX_SIMPLE);
-
-                double result = Imgproc.matchShapes(contours1.get(1), contours2.get(1), 1, 0);
+                double result = Imgproc.matchShapes(contours1.get(0), contours2.get(0), Imgproc.CV_CONTOURS_MATCH_I1, 0);
                 doubles.add(result);
 
                 if (result < 0.15) {
