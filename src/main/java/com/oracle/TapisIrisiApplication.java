@@ -43,22 +43,6 @@ public class TapisIrisiApplication {
 //			user.setPassword("admin");
 //			user.setRole(Role.ADMIN);
 //			User returnedUser = userDao.save(user);
-//
-//			// Motif 2
-//			Motif motif2 = new Motif();
-//			motif2.setLibelle("bande de nuages");
-//			motif2.setDescription(" Il apparaît dans le champ, répété un certain nombre de fois et diversement orienté,"
-//					+ " mais toujours associé à d’autres éléments décoratifs floraux, tels que palmettes et arabesques,");
-//			Motif returnedMotif2 = motifDao.save(motif2);
-//			// User motif 2
-//			UserMotif userMotif2 = new UserMotif();
-//			MultipartFile multipartFile2 = new MockMultipartFile("motif2.png", new FileInputStream(new File(
-//					"C:\\Users\\yassi\\Desktop\\tapsbackend2\\tapisIrisiBackend\\src\\assets\\images\\motif2.png")));
-//			byte[] blob2 = multipartFile2.getBytes();
-//			userMotif2.setImage(blob2);
-//			userMotif2.setUser(returnedUser);
-//			userMotif2.setMotif(returnedMotif2);
-//			UserMotif returnedUserMotif2 = userMotifDao.save(userMotif2);
 //			// Motif 1
 //			Motif motif1 = new Motif();
 //			motif1.setLibelle("corne de bélier");
@@ -80,6 +64,22 @@ public class TapisIrisiApplication {
 //			userMotif1.setUser(returnedUser);
 //			userMotif1.setMotif(returnedMotif1);
 //			UserMotif returnedUserMotif1 = userMotifDao.save(userMotif1);
+//			// Motif 2
+//			Motif motif2 = new Motif();
+//			motif2.setLibelle("bande de nuages");
+//			motif2.setDescription(" Il apparaît dans le champ, répété un certain nombre de fois et diversement orienté,"
+//					+ " mais toujours associé à d’autres éléments décoratifs floraux, tels que palmettes et arabesques,");
+//			Motif returnedMotif2 = motifDao.save(motif2);
+//			// User motif 2
+//			UserMotif userMotif2 = new UserMotif();
+//			MultipartFile multipartFile2 = new MockMultipartFile("motif2.png", new FileInputStream(new File(
+//					"C:\\Users\\yassi\\Desktop\\tapsbackend2\\tapisIrisiBackend\\src\\assets\\images\\motif2.png")));
+//			byte[] blob2 = multipartFile2.getBytes();
+//			userMotif2.setImage(blob2);
+//			userMotif2.setUser(returnedUser);
+//			userMotif2.setMotif(returnedMotif2);
+//			UserMotif returnedUserMotif2 = userMotifDao.save(userMotif2);
+
 		};
 	}
 
